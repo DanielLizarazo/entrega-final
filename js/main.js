@@ -5,6 +5,15 @@ const contenedorPrecio = document.getElementById("contenedorPrecio");
 const contenedorBotones = document.getElementById("contenedorBotones");
 
 
+
+  fetch("./js/productos.json")
+ .then(response => response.json())
+ .then(data=> productos = data)
+ .then(data => {data.forEach(producto => { crearCard(producto)})});
+
+
+
+
 // CARRITO -----------------------------------------
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
@@ -72,7 +81,7 @@ function mostrarCarrito(carrito) {
     contenedorTotal.appendChild(textoTotal);
     contenedorTotal.appendChild(total);
     contenedorPrecio.appendChild(contenedorTotal)
-    
+
 
 };
 
@@ -97,21 +106,18 @@ function agregarCarrito(id) {
 
 function eliminarCarrito(id) {
 
-    swal({
-        title: "Quieres eliminar el producto? ",
-        text: "Piensalo es una gran planta!",
-        type: "warning",
+    Swal.fire({
+        title: "Estas seguro de eliminar el producto?",
+        text: "perderas una planta increible",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "si Eliminalo",
-        cancelButtonText: "No, me encanta esta planta",
-        closeOnConfirm: false,
-        closeOnCancel: false
-      },
-      function(isConfirm){
-        if (isConfirm) {
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "eliminar"
+      }).then((result) => {
+        if (result.isConfirmed) {
             let productoEnCarro = carrito.find(el => el.id === id);
-        
+
             if (productoEnCarro) {
                 if (productoEnCarro.cantidad > 1) {
                     productoEnCarro.cantidad--;
@@ -122,8 +128,13 @@ function eliminarCarrito(id) {
             localStorage.setItem("carrito", JSON.stringify(carrito));
             mostrarCarrito(carrito);
             console.log(carrito);
-            
-        } 
+
+          Swal.fire({
+            title: "eliminado",
+            text: "eliminado correctamente",
+            icon: "success"
+          });
+        }
       });
 
 };
@@ -132,7 +143,7 @@ function eliminarCarrito(id) {
 // CREAR CARTA ---------------------------------
 function crearCard(producto) {
 
-    
+
     const card = document.createElement("div");
     card.className = "card";
 
@@ -165,10 +176,10 @@ function crearCard(producto) {
     card.appendChild(botonCompra);
 
     contenedorPrincipal.appendChild(card);
-    
+
 }
 
-productos.forEach(el => crearCard(el, "contenedorPrincipal"));
+//   productos.forEach(el => crearCard(el, "contenedorPrincipal"));
 
 
 // FILTRO BOTONES ------------------------
@@ -177,7 +188,7 @@ function mostrarProducto(categoria) {
 
      let filtro = productos.filter(el => el.categoria === categoria);
     filtro.forEach(el => crearCard(el, "contenedorPrincipal"));
-    
+
 }
 const botones = document.createElement("div");
 botones.className = "botonesFiltro";
@@ -209,5 +220,5 @@ botones.className = "botonesFiltro";
 
     contenedorBotones.appendChild(botones);
 
-    
+
 
