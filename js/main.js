@@ -51,10 +51,11 @@ function mostrarCarrito(carrito) {
         precio.className = "precio";
 
         const botonCompra = document.createElement("button");
-        botonCompra.innerText = "eliminar";
+        botonCompra.innerText = "Eliminar";
         botonCompra.className = "botonDel";
         botonCompra.onclick = () => eliminarCarrito(producto.id);
 
+        
         card.appendChild(nombre);
         card.appendChild(imagen);
         card.appendChild(categoria);
@@ -62,9 +63,13 @@ function mostrarCarrito(carrito) {
         card.appendChild(precio);
         card.appendChild(botonCompra);
 
+ 
         carro.appendChild(card);
 
     });
+
+
+
 
     contenedorPrecio.innerHTML= "";
     const contenedorTotal = document.createElement("div");
@@ -72,11 +77,11 @@ function mostrarCarrito(carrito) {
 
     const textoTotal = document.createElement("p");
     textoTotal.className = "Total";
-    textoTotal.innerText = "Total";
+    textoTotal.innerText = "Total: ";
 
     const total = document.createElement("p");
-    total.className = "total";
-    total.innerText = valorTotal;
+    total.className = "Total";
+    total.innerText = ` $${valorTotal}`;
 
     contenedorTotal.appendChild(textoTotal);
     contenedorTotal.appendChild(total);
@@ -143,7 +148,7 @@ function eliminarCarrito(id) {
 // CREAR CARTA ---------------------------------
 function crearCard(producto) {
 
-
+   
     const card = document.createElement("div");
     card.className = "card";
 
@@ -209,7 +214,7 @@ botones.className = "botonesFiltro";
     aromatica.onclick = () => mostrarProducto("aromaticas");
 
     const todos = document.createElement("button");
-    todos.innerText = "todos";
+    todos.innerText = "Todos";
     todos.className = "botonFiltro";
     todos.onclick = () => productos.forEach(el => crearCard(el, "contenedorPrincipal"));
 
